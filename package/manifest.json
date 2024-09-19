@@ -16,5 +16,12 @@
     "16": "icons/icon_16.png",
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://ssl.wf.jobcan.jp/*"],
+      "js": ["jobcan_wf_content.js", "jquery-3.4.1.min.js"],
+      "run_at": "document_idle"
+    }
+  ]
 }
