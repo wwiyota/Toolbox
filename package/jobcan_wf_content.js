@@ -1,19 +1,25 @@
 // ページロード後に少し待ってからspan要素を操作
-// HACK: 要素をセットするタイミングを考えたい
 window.addEventListener('load', () => {
-
 	setTimeout(() => {
-		// 申請一覧の要素を取得
-		const requestElements = document.querySelectorAll('div.one-request');
-		requestElements.forEach(request => {
-			setDataClipboardText(request);
+		// tabNav-wrapper.ng-scope要素を取得
+		const tabNavWrapper = document.querySelector('div.tabNav-wrapper.ng-scope');
+		// HTMLを直接挿入
+		tabNavWrapper.insertAdjacentHTML('afterend', '<div class="new-button-class"><button id="btn-chatwork-url">【 Chatwork 】<br/>URLをセット</button></div>');
+		// ボタン要素を取得しイベントを設定する
+		const btnChatworkUrl = document.getElementById('btn-chatwork-url');
+		btnChatworkUrl.addEventListener('click', () => {
+			// 申請一覧の要素を取得
+			const requestElements = document.querySelectorAll('div.one-request');
+			requestElements.forEach(request => {
+				setDataClipboardText(request);
+			});
 		});
-	}, 3000);
+	}, 1000);
 });
 
 /**
  * 申請タイトルとURLをセット
- * @param {申請要素} request 
+ * @param {申請要素} request
  */
 function setDataClipboardText(request) {
 	// 申請タイトルを取得

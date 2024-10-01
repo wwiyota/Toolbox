@@ -1,0 +1,25 @@
+.new-button-class {
+    z-index: 1;
+    position: absolute;
+    right: 0px;
+    top: -50px;
+    min-width: 70px;
+    text-align: center;
+}
+
+#btn-chatwork-url {
+    background-color: #0cb43f; /* 緑色の背景 */
+    height: 48px;
+    border: none;
+    color: white;
+    padding: 4px 11px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 12px; /* ボタンの角を丸く */
+}
+
+.btn-chatwork-url:hover {
+    background-color: #347737; /* マウスオーバー時の背景色変更 */
+}
