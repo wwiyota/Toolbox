@@ -1,3 +1,4 @@
+// Service Workerのインストール時に実行される処理
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "copyBacklogInfoToClipboard",
@@ -13,6 +14,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+// コンテキストメニューがクリックされた時の処理を設定
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   switch(info.menuItemId)
   {
@@ -33,6 +35,23 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
   }
 );
+
+// WebRequest APIを使用して、リクエストを監視
+chrome.webRequest.onBeforeRequest.addListener(
+  function(details) {
+    // ジョブカンワークフローの申請系のリクエストがあった場合
+    if (details.url.includes("https://ssl.wf.jobcan.jp/api/v1/myrequests/?page=")){
+      // メッセージを送信
+      // NOTE: メッセージを送信し、content_scripts側でメッセージを受信して処理を行う
+      let promise = chrome.tabs.sendMessage(details.tabId, { action: "setClipboardTextForChatwork" });
+      promise.catch((error) => {
+          console.log(error);
+      });
+    }
+  },
+  { urls: ["https://*/*"] }
+);
+
 
 /**
  * Backlog課題情報をクリップボードにコピー
@@ -66,8 +85,8 @@ function copyScheduleToClipboard() {
   if (timeElement) {
     for (let node of timeElement.childNodes) {
     if (node.nodeType === Node.TEXT_NODE) {
-      time = node.nodeValue.trim();
-      break;
+    time = node.nodeValue.trim();
+    break;
     }
     }
   }
@@ -79,4 +98,6 @@ function copyScheduleToClipboard() {
   }).catch(err => {
     console.error("Failed to copy to clipboard: ", err);
   });
-}
+  }
+
+console.log("service_worker.js loaded");

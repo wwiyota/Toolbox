@@ -20,6 +20,6 @@
     border-radius: 12px; /* ボタンの角を丸く */
 }
 
-.btn-chatwork-url:hover {
+#btn-chatwork-url:hover {
     background-color: #347737; /* マウスオーバー時の背景色変更 */
 }
